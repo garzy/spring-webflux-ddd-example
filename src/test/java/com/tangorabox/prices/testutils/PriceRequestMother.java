@@ -1,9 +1,7 @@
 package com.tangorabox.prices.testutils;
 
 import com.tangorabox.prices.domain.entity.PriceRequest;
-
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import com.tangorabox.prices.domain.types.PriceDate;
 
 public final class PriceRequestMother {
 
@@ -55,7 +53,7 @@ public final class PriceRequestMother {
                 .build();
     }
 
-    private static OffsetDateTime getDate(int day, int hour) {
-        return OffsetDateTime.of(YEAR, MONTH, day, hour, 0, 0, 0, ZoneOffset.UTC);
+    private static PriceDate getDate(int day, int hour) {
+        return PriceDate.valueOf(YEAR, MONTH, day, hour);
     }
 }

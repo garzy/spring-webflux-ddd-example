@@ -1,6 +1,10 @@
 package com.tangorabox.prices.domain.types;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
-public record PVP(BigDecimal amount) {
+@Data
+public class PVP {
+    private final BigDecimal amount;
 }

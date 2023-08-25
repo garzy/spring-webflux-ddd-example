@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import java.time.LocalDateTime;
 
 @Repository
-public interface PriceRepositoryJPA extends ReactiveCrudRepository<PriceEntity, Integer> {
+public interface PriceRepositoryJPA extends ReactiveCrudRepository<PriceEntity, Long> {
 
     Flux<PriceEntity> findAllByProductIdAndBrandIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(long productId, long brandId, LocalDateTime date, LocalDateTime date2);
 

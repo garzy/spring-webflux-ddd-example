@@ -6,6 +6,7 @@ import com.tangorabox.prices.domain.types.PVP;
 import com.tangorabox.prices.domain.types.PriceDate;
 import com.tangorabox.prices.infrastructure.controller.PriceResponseDTO;
 import com.tangorabox.prices.infrastructure.entity.PriceEntity;
+import com.tangorabox.prices.infrastructure.io.PriceCSV;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 public abstract class PriceMapperInfra {
 
     public abstract Price toPrice(PriceEntity priceEntity);
+
+    public abstract PriceEntity toPriceEntity(PriceCSV priceCSV);
 
     public abstract PriceResponseDTO toPriceResponseDTO(PriceResponse response);
 

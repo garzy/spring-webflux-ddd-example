@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class PriceEntity {
 
     @Id
-    private Integer id;
+    private Long id;
     private long brandId;
     private LocalDateTime startDate;
     private LocalDateTime endDate;

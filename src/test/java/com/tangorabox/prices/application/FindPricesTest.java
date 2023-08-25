@@ -5,7 +5,6 @@ import com.tangorabox.prices.domain.models.Price;
 import com.tangorabox.prices.domain.models.PriceRepository;
 import com.tangorabox.prices.domain.models.PriceRequest;
 import com.tangorabox.prices.testutils.Fixtures;
-import com.tangorabox.prices.testutils.PriceRequestMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +35,7 @@ class FindPricesTest {
         //Given
         final List<Price> multiplePrices = multiplePricesSortedByPriority();
         given(priceRepository.find(any())).willReturn(Flux.fromIterable(multiplePrices));
-        PriceRequest request = PriceRequestMother.test1();
+        PriceRequest request = Fixtures.getObject(PriceRequest.class);
 
         //When/Then
         StepVerifier.create(findPrices.execute(request))
@@ -59,7 +58,7 @@ class FindPricesTest {
     void priceNotFounded() {
         //Given
         given(priceRepository.find(any())).willReturn(Flux.empty());
-        PriceRequest request = PriceRequestMother.test1();
+        PriceRequest request = Fixtures.getObject(PriceRequest.class);
 
         //When/Then
         StepVerifier.create(findPrices.execute(request))

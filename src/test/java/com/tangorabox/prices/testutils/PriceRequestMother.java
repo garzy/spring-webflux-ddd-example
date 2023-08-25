@@ -1,6 +1,6 @@
 package com.tangorabox.prices.testutils;
 
-import com.tangorabox.prices.domain.entity.PriceRequest;
+import com.tangorabox.prices.domain.models.PriceRequest;
 import com.tangorabox.prices.domain.types.PriceDate;
 
 public final class PriceRequestMother {
@@ -54,6 +54,6 @@ public final class PriceRequestMother {
     }
 
     private static PriceDate getDate(int day, int hour) {
-        return PriceDate.valueOf(YEAR, MONTH, day, hour);
+        return PriceDate.of(YEAR, MONTH, day, hour);
     }
 }

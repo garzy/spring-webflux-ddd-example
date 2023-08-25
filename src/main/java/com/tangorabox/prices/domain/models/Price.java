@@ -1,4 +1,4 @@
-package com.tangorabox.prices.domain.entity;
+package com.tangorabox.prices.domain.models;
 
 import com.tangorabox.prices.domain.types.Currency;
 import com.tangorabox.prices.domain.types.PVP;

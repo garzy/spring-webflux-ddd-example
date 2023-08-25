@@ -2,15 +2,18 @@ package com.tangorabox.prices.domain.types;
 
 import lombok.Data;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 
 @Data
 public class PriceDate {
 
-    private final OffsetDateTime value;
+    private final LocalDateTime value;
 
-    public static PriceDate valueOf(int year, int month, int day, int hour) {
-        return new PriceDate(OffsetDateTime.of(year, month, day, hour, 0, 0, 0, ZoneOffset.UTC));
+    public static PriceDate of(int year, int month, int day, int hour) {
+        return new PriceDate(LocalDateTime.of(year, month, day, hour, 0));
+    }
+
+    public static PriceDate of(LocalDateTime localDateTime) {
+        return new PriceDate(localDateTime);
     }
 }

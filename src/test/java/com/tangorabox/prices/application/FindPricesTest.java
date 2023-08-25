@@ -1,10 +1,9 @@
 package com.tangorabox.prices.application;
 
-import com.tangorabox.prices.domain.entity.Price;
-import com.tangorabox.prices.domain.entity.PriceRepository;
-import com.tangorabox.prices.domain.entity.PriceRequest;
-import com.tangorabox.prices.domain.entity.PriceResponse;
 import com.tangorabox.prices.domain.mappers.PriceMapperImpl;
+import com.tangorabox.prices.domain.models.Price;
+import com.tangorabox.prices.domain.models.PriceRepository;
+import com.tangorabox.prices.domain.models.PriceRequest;
 import com.tangorabox.prices.testutils.Fixtures;
 import com.tangorabox.prices.testutils.PriceRequestMother;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -37,15 +35,14 @@ class FindPricesTest {
     void multiplePricesShouldReturnTheMajorPriority() {
         //Given
         final List<Price> multiplePrices = multiplePricesSortedByPriority();
-        given(priceRepository.find(any())).willReturn(multiplePrices);
+        given(priceRepository.find(any())).willReturn(Flux.fromIterable(multiplePrices));
         PriceRequest request = PriceRequestMother.test1();
 
-        //When
-        final Optional<PriceResponse> response = findPrices.execute(request);
+        //When/Then
+        StepVerifier.create(findPrices.execute(request))
+                .expectNextMatches(priceResponse -> priceResponse.getBrandId() == multiplePrices.get(multiplePrices.size() - 1).getBrandId())
+                .verifyComplete();
 
-        //Then
-        then(response).isPresent();
-        then(response.get().getBrandId()).isEqualTo(multiplePrices.get(multiplePrices.size() - 1).getBrandId());
     }
 
     private List<Price> multiplePricesSortedByPriority() {
@@ -61,13 +58,11 @@ class FindPricesTest {
     @Test
     void priceNotFounded() {
         //Given
-        given(priceRepository.find(any())).willReturn(Collections.emptyList());
+        given(priceRepository.find(any())).willReturn(Flux.empty());
         PriceRequest request = PriceRequestMother.test1();
 
-        //When
-        final Optional<PriceResponse> response = findPrices.execute(request);
-
-        //Then
-        then(response).isEmpty();
+        //When/Then
+        StepVerifier.create(findPrices.execute(request))
+                .verifyComplete();
     }
 }
